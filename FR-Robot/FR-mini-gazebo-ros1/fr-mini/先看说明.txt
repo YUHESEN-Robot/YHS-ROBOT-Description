@@ -1,0 +1,13 @@
+1、启动文件：roslaunch fr-mini yhs_gazebo.launch
+2、控制话题：/cmd_vel
+geometry_msgs/Twist "linear:
+  x: 0.0   #控制模型前进和后退，前正后负
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"  #控制模型转向，左正右负
+
+
+
