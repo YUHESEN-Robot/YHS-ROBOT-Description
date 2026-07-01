@@ -1,0 +1,14 @@
+1、启动文件：roslaunch fw-mid yhs_gazebo.launch
+2、选择档位：找到launch文件夹，打开control.launch文件，找到“<param name="gear" type="int" value="6" />”，修改参数value, "6"为“4T4D-档”，“7”为“横移-档”
+2、控制话题：/cmd_vel
+geometry_msgs/Twist "linear:
+  x: 0.0   #控制模型前进和后退，前正后负
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"  #控制模型转向，左正右负
+
+
+

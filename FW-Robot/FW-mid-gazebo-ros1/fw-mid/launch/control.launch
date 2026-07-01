@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<launch>
+
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find fw-mid)/config/smart_control_config.yaml" command="load"/>
+
+  <!-- load controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/fw_mid" args="joint_state_controller rear_right_velocity_controller rear_left_velocity_controller front_right_velocity_controller front_left_velocity_controller 
+        front_right_steering_position_controller front_left_steering_position_controller rear_right_steering_position_controller rear_left_steering_position_controller"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+      respawn="true" output="screen">
+      <remap from="/joint_states" to="/fw_mid/joint_states" />
+  </node>
+
+  <node name="cmdvel2gazebo" pkg="fw-mid" type="cmdvel2gazebo.py" respawn="true" output="screen">
+    <param name="gear" type="int" value="7" />
+  </node>
+</launch>
