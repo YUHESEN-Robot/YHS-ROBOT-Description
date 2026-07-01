@@ -1,0 +1,58 @@
+yhs_can_control_node:
+  ros__parameters:
+    can_name: "can0"
+    ultrasonic_number: [0, 1, 2, 3, 4, 5, 6, 7] # 如果有超声波，安装的位置可能不同，打印"ultrasonic"话题，根据实际数据改变序号，空格隔开，
+                                                  # 前右到右前默认[0~7]，逆时针，单位为毫米
+
+    # odom相关参数
+    odom_frame: "odom"
+    base_link_frame: "base_link"
+    tf_used: true
+
+    # 里程计标定系数 (用于补偿轮胎气压、摩擦力等造成的物理偏差)
+    # 计算公式: 真实距离 / odom显示的距离 (例如: 你实际转了360度，odom只转了343度，那么 angular_scale_z 就是 360/343 = 1.0495)
+    linear_scale_x: 1.0
+    linear_scale_y: 1.0
+    angular_scale_z: 1.0
+
+    # io_cmd 参数 (定时发送保活)
+    io_cmd:
+      # Bit 0: 灯控权限模式(false: 自动控制灯光, true: 手动控制灯光)
+      io_cmd_lamp_ctrl: true
+      # Bit 1: 安全停车解锁(false: 无效, true: 解锁使能（下降沿有效）)
+      io_cmd_unlock: true
+      # Bit 2: 低功耗（false: 禁用, true: 启用）
+      io_cmd_low_power_enable: true
+      # Byte 1 Bit 0: 近光灯(false: 关闭, true: 打开)
+      io_cmd_lower_beam_headlamp: true
+      # Byte 1 Bit 1: 远光灯(没有)
+      io_cmd_upper_beam_headlamp: false
+      # Byte 1 Bit 2-3: 转向灯
+      # 0: 全关, 1: 左转, 2: 右转, 3: 双闪
+      io_cmd_turn_lamp: 0
+      # Byte 1 Bit 4: 制动灯(false: 关闭, true: 打开)
+      io_cmd_braking_lamp: true
+      # Byte 1 Bit 5: 示廓灯(没有)
+      io_cmd_clearance_lamp: false
+      # Byte 1 Bit 6: 雾灯(没有)
+      io_cmd_fog_lamp: false
+      # Byte 1 Bit 7: 扬声器(没有)
+      io_cmd_speaker: false
+      # Byte 2低功耗触发比例 (1%/bit,小于0或者大于100时无效; 比例越大越难触发)
+      io_cmd_low_power_ratio: 0
+
+    # motor_cmd 参数
+    motor_cmd:
+      # Byte 0: 驱动电机使能 (false: 释放, true: 使能)
+      motor_cmd_drive_enable_lf: true   # 左前驱动
+      motor_cmd_drive_enable_lr: true   # 左后驱动
+      motor_cmd_drive_enable_rf: true   # 右前驱动
+      motor_cmd_drive_enable_rr: true   # 右后驱动
+      # Byte 0: 转向电机使能 (false: 释放, true: 使能)
+      motor_cmd_steering_enable_lf: true  # 左前转向
+      motor_cmd_steering_enable_lr: true  # 左后转向
+      motor_cmd_steering_enable_rf: true  # 右前转向
+      motor_cmd_steering_enable_rr: true  # 右后转向
+      # Byte 1: 电机总电源重启 (false: 无效, true: 重启)
+      # 注意：这是一个下降沿有效的触发信号，默认应该设为 false
+      motor_cmd_power_restart: false

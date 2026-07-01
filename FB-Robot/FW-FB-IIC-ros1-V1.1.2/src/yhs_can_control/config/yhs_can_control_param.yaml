@@ -1,0 +1,55 @@
+#底盘控制节点参数
+yhs_can_control:
+  # 里程计坐标系名称
+  odom_frame: odom
+  
+  # 机器人底盘坐标系名称
+  base_link_frame: base_link
+  
+  # CAN 接口名称
+  if_name: can0
+  
+  # 是否发布里程计tf
+  tfUsed: true
+
+  io_cmd:
+    # 灯光控制权模式 (false: 由底盘固件控制, true: 由本节点控制)
+    io_cmd_lamp_ctrl: true
+    # 安全停车开关 (false: 无效, true: 下降沿解锁安全停车, 用于触发防撞条后解锁机器人底盘)
+    io_cmd_unlock: false
+    # 低功耗模式使能 (false: 禁用低功耗模式, true: 启用低功耗模式)
+    io_cmd_low_power_enable: false
+    # 近光灯开关
+    io_cmd_lower_beam_headlamp: false
+    # 远光灯开关
+    io_cmd_upper_beam_headlamp: false
+    # 转向灯开关
+    io_cmd_turn_lamp: 0
+    # 制动灯开关
+    io_cmd_braking_lamp: false
+    # 示廊灯开关
+    io_cmd_clearance_lamp: false
+    # 雾灯开关
+    io_cmd_fog_lamp: false
+    # 扬声器开关
+    io_cmd_speaker: false
+    # 低功耗模式触发比例设定
+    io_cmd_low_power_ratio: 0
+
+  motor_cmd:
+    # Byte 0: 驱动电机使能 (false: 释放, true: 使能)
+    motor_cmd_drive_enable_lf: true  # 左前驱动
+    motor_cmd_drive_enable_lr: true  # 左后驱动
+    motor_cmd_drive_enable_rf: true  # 右前驱动
+    motor_cmd_drive_enable_rr: true  # 右后驱动
+
+    # Byte 0: 转向电机使能 (false: 释放, true: 使能)
+    motor_cmd_steering_enable_lf: true # 左前转向
+    motor_cmd_steering_enable_lr: true # 左后转向
+    motor_cmd_steering_enable_rf: true # 右前转向
+    motor_cmd_steering_enable_rr: true # 右后转向
+
+    # Byte 1: 电机总电源重启 (false: 无效, true: 重启)
+    # 注意：这是一个下降沿有效的触发信号，默认应该设为 false
+    # 如果设为 true，节点启动时会自动执行一次 High -> Low 的操作，即重启一次电机总电源
+    motor_cmd_power_restart: false
